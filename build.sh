@@ -1,4 +1,6 @@
 #!/bin/bash
+deno test src/functions.test.ts
+
 deno compile \
   --unstable \
   --allow-net \
