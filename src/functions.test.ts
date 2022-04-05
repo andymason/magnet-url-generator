@@ -2,7 +2,10 @@ import {
   assertThrows,
   assertStrictEquals,
 } from "https://deno.land/std@0.133.0/testing/asserts.ts";
-import { validateBitTorrentHash } from "./functions.ts";
+import {
+  validateBitTorrentHash,
+  validateTrackerResponse,
+} from "./functions.ts";
 
 Deno.test("Hash validation", () => {
   // @ts-expect-error: Testing invalid input
@@ -17,4 +20,18 @@ Deno.test("Hash validation", () => {
 
   const VALID_HASH = "1234567890123456789012345678901234567890";
   assertStrictEquals(validateBitTorrentHash(VALID_HASH), undefined);
+});
+
+Deno.test("tracker API response", () => {
+  // @ts-expect-error: Testing invalid input
+  assertThrows(() => validateTrackerResponse(), Error);
+  // @ts-expect-error: Testing invalid input
+  assertThrows(() => validateTrackerResponse(2), Error);
+  assertThrows(() => validateTrackerResponse(""), Error);
+
+  const INVALID_RESPONSE = "ftp://wrong.com";
+  assertThrows(() => validateTrackerResponse(INVALID_RESPONSE), Error);
+
+  const VALID_RESPONSE = "https://valid.com";
+  assertStrictEquals(validateTrackerResponse(VALID_RESPONSE), undefined);
 });
