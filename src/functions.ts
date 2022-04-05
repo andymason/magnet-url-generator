@@ -35,7 +35,7 @@ export function validateTrackerResponse(trackers: string): void {
     throw new Error("API response MUST be a string");
   }
 
-  if (/(?:udp:|http:)/.test(trackers) === false) {
+  if (/(?:udp:|http:|https:)/.test(trackers) === false) {
     throw new Error("API response MUST contain a least one URL");
   }
 }
